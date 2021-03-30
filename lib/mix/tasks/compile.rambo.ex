@@ -16,22 +16,7 @@ defmodule Mix.Tasks.Compile.Rambo do
 
   @environment List.to_string(:erlang.system_info(:system_architecture))
 
-  filename =
-    cond do
-      String.starts_with?(@environment, "x86_64-apple-darwin") ->
-        @filenames[@mac]
-
-      String.starts_with?(@environment, "x86_64") and String.contains?(@environment, "linux") ->
-        @filenames[@linux]
-
-      @environment == "win32" ->
-        @filenames[@windows]
-
-      true ->
-        @filenames.custom
-    end
-
-  @filename filename
+  @filename @filenames.custom
   def find_rambo do
     Path.join(:code.priv_dir(:rambo), @filename)
   end
